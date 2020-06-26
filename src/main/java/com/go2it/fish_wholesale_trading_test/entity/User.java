@@ -2,21 +2,30 @@ package com.go2it.fish_wholesale_trading_test.entity;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.util.Collection;
 
 @Entity(name = "user")
+@Table(name = "user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="user_id")
     private long userId;
+    @Column(name="user_name")
     private String userName;
-    private String address;
+    @Column(name="user_address")
+    private String userAddress;
+    @Column(name="e_mail")
     private String eMail;
+    @Column(name="login")
     private String login;
+    @Column(name="password")
     private String password;
+    @Column(name="phone")
     private String phone;
+    @Column(name="role")
     private String role;
+    @Column(name="date_of_birth")
     private Timestamp dateOfBirth;
 
     @OneToMany(mappedBy = "user")
@@ -41,12 +50,12 @@ public class User {
         this.userName = userName;
     }
 
-    public String getAddress() {
-        return address;
+    public String getUserAddress() {
+        return userAddress;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setUserAddress(String address) {
+        this.userAddress = address;
     }
 
     public String geteMail() {
@@ -110,7 +119,7 @@ public class User {
         return "User{" +
                 "userId=" + userId +
                 ", userName='" + userName + '\'' +
-                ", address='" + address + '\'' +
+                ", address='" + userAddress + '\'' +
                 ", eMail='" + eMail + '\'' +
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +

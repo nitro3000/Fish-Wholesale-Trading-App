@@ -2,12 +2,16 @@ package com.go2it.fish_wholesale_trading_test.entity;
 
 import javax.persistence.*;
 
-@Entity
+@Entity(name="itemOrder")
+@Table(name="item_order")
 public class ItemOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="item_order_id")
     private long itemOrderId;
+    @Column(name="item_order_weight")
     private long itemOrderWeight;
+    @Column(name="item_order_price")
     private double itemOrderPrice;
 
     @ManyToOne

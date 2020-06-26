@@ -10,9 +10,11 @@ import java.util.Collection;
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
+    @Column(name = "order_id")
     private long orderId;
+    @Column(name = "order_date")
     private Timestamp orderDate;
+    @Column(name = "order_price")
     private double orderPrice;
 
     @ManyToOne
