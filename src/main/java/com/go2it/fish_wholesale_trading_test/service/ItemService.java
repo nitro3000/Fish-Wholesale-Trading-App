@@ -1,5 +1,6 @@
 package com.go2it.fish_wholesale_trading_test.service;
 
+import com.go2it.fish_wholesale_trading_test.dto.ItemDto;
 import com.go2it.fish_wholesale_trading_test.entity.Item;
 import com.go2it.fish_wholesale_trading_test.repo.IItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,15 @@ public class ItemService implements IItemService {
     @Override
     public void save(Item item) {
         itemRepository.save (item);
+    }
+
+
+    @Override
+    public void save(ItemDto itemDto) {
+        Item item = new Item ();
+        item.setItemName (itemDto.getItemName ());//convert from DTO to regular object
+        item.setItemPrice (itemDto.getItemPrice ());
+        save (item);
     }
 
     @Override

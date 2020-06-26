@@ -27,7 +27,7 @@ public class ItemController {
                 + "<h1>Welcome</h1>" +
                 "<h1> Fish Wholesale Store </h1>" +
                 "<img src=https://www.pilotonline.com/resizer/7bQ5-hekLPP3OHZ1QECd3erH24A=/415x198/top/arc-anglerfish-arc2-prod-tronc.s3.amazonaws.com/public/YLEFAHRMEFCMFO34O7QIQJNCHY.jpg></img>"
-                + "</div>"+"<ul>";
+                + "</div>" + "<ul>";
 
 
         for (Item item : itemList) {
@@ -37,5 +37,10 @@ public class ItemController {
         htmlText += "<ul>";
         return htmlText;
     }
+    @RequestMapping(value = "/items", method = RequestMethod.POST)
+    public ItemDto createItem(@RequestBody ItemDto itemDto){
+        itemService.save (itemDto);
+            return itemDto;
 
+    }
 }

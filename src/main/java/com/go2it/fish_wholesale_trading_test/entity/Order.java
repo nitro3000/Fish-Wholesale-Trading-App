@@ -1,15 +1,18 @@
 package com.go2it.fish_wholesale_trading_test.entity;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.Collection;
 
 @Entity(name = "order")
+@Table(name = "orders")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private long orderId;
-    private LocalDate orderDate;
+    private Timestamp orderDate;
     private double orderPrice;
 
     @ManyToOne
@@ -17,7 +20,7 @@ public class Order {
     private User user;
 
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "orders")
     private Collection<ItemOrder> ordersList;
 
     public Order() {
@@ -31,11 +34,11 @@ public class Order {
         this.orderId = orderId;
     }
 
-    public LocalDate getOrderDate() {
+    public Timestamp getOrderDate() {
         return orderDate;
     }
 
-    public void setOrderDate(LocalDate orderDate) {
+    public void setOrderDate(Timestamp orderDate) {
         this.orderDate = orderDate;
     }
 

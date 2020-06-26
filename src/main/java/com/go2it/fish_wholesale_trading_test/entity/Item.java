@@ -3,7 +3,7 @@ package com.go2it.fish_wholesale_trading_test.entity;
 import javax.persistence.*;
 import java.util.Collection;
 
-@Entity(name = "item")
+@Entity//(name = "item")
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

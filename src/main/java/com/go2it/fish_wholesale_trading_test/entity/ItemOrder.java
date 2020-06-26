@@ -16,7 +16,7 @@ public class ItemOrder {
 
     @ManyToOne
     @JoinColumn(name = "orderId")
-    private Order order;
+    private Order orders;
 
     public ItemOrder() {
     }
@@ -54,11 +54,11 @@ public class ItemOrder {
     }
 
     public Order getOrder() {
-        return order;
+        return orders;
     }
 
     public void setOrder(Order order) {
-        this.order = order;
+        this.orders = order;
     }
 
 
@@ -69,7 +69,7 @@ public class ItemOrder {
                 ", itemOrderWeight=" + itemOrderWeight +
                 ", itemOrderPrice=" + itemOrderPrice +
                 ", item=" + item +
-                ", order=" + order +
+                ", order=" + orders +
                 '}';
     }
 }

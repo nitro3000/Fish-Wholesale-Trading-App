@@ -1,6 +1,7 @@
 package com.go2it.fish_wholesale_trading_test.entity;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.Collection;
 
@@ -16,7 +17,7 @@ public class User {
     private String password;
     private String phone;
     private String role;
-    private LocalDate dateOfBirth;
+    private Timestamp dateOfBirth;
 
     @OneToMany(mappedBy = "user")
     private Collection<Order> UserOrderList;
@@ -96,11 +97,11 @@ public class User {
         UserOrderList = userOrderList;
     }
 
-    public LocalDate getDateOfBirth() {
+    public Timestamp getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(LocalDate dateOfBirth) {
+    public void setDateOfBirth(Timestamp dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
