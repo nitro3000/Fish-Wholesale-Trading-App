@@ -7,15 +7,21 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IItemService {
-    Optional<Item> findById(long id);
 
-    void save (Item item);
-    void save (ItemDto itemDto);
+    void save(Item item);
 
-    void update (Item item);
+//    void save(ItemDto itemDto);
 
-    void delete (Item item);
+    void update(Item item);
+
+    void delete(Item item);
 
     List<Item> findAll();
+
+    Optional<Item> findById(long id);
+
+    Optional<Item> findByItemName(String itemName);
+
+    double getItemPriceByItemId(long id);
 
 }

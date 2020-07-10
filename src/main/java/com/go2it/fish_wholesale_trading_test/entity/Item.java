@@ -21,6 +21,13 @@ public class Item {
     public Item() {
     }
 
+    public Item(long itemId) {
+        this.itemId = itemId;
+    }
+
+    public Item(Long id, String itemName) {
+    }
+
     public long getItemId() {
         return itemId;
     }

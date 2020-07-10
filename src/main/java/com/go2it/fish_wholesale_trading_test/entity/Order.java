@@ -16,6 +16,8 @@ public class Order {
     private Timestamp orderDate;
     @Column(name = "order_price")
     private double orderPrice;
+    @Column(name = "order_total_weight")
+    private double orderTotalWeight;
 
     @ManyToOne
     @JoinColumn(name = "userId")
@@ -68,12 +70,23 @@ public class Order {
         this.ordersList = ordersList;
     }
 
+    public double getOrderTotalWeight() {
+        return orderTotalWeight;
+    }
+
+    public void setOrderTotalWeight(double orderTotalWeight) {
+        this.orderTotalWeight = orderTotalWeight;
+    }
+
     @Override
     public String toString() {
         return "Order{" +
                 "orderId=" + orderId +
                 ", orderDate=" + orderDate +
                 ", orderPrice=" + orderPrice +
+                ", orderTotalWeight=" + orderTotalWeight +
+                ", user=" + user +
+                ", ordersList=" + ordersList +
                 '}';
     }
 }
