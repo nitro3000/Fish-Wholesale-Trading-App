@@ -1,8 +1,11 @@
 package com.go2it.fish_wholesale_trading_test.dto;
 
+import javax.swing.*;
+
 public class ItemDto {
     private String itemName;
     private double itemPrice;
+    private String itemDescriptions;
 
     public ItemDto() {
     }
@@ -11,6 +14,12 @@ public class ItemDto {
         this.itemName = itemName;
         this.itemPrice = itemPrice;
     }
+
+//    public ItemDto(String itemName, double itemPrice, String itemDescriptions) {
+//        this.itemName = itemName;
+//        this.itemPrice = itemPrice;
+//        this.itemDescriptions = itemDescriptions;
+//    }
 
     public String getItemName() {
         return itemName;
@@ -26,6 +35,14 @@ public class ItemDto {
 
     public void setItemPrice(double itemPrice) {
         this.itemPrice = itemPrice;
+    }
+
+    public String getItemDescriptions() {
+        return itemDescriptions;
+    }
+
+    public void setItemDescriptions(String itemDescriptions) {
+        this.itemDescriptions = itemDescriptions;
     }
 
     @Override

@@ -12,7 +12,9 @@ public interface IItemRepository extends JpaRepository<Item,Long> {
 
      double getItemPriceByItemId(long id);
 
-    // Optional<Item> findByItemName(String itemName);
+    Optional<Item> findByItemName(String itemName);
+
+     void removeByItemId (Long id);
 
 //    @Query("SELECT " +
 //            "new com.go2it.fish_wholesale_trading_test.entity.Item(i.itemPrice)" +

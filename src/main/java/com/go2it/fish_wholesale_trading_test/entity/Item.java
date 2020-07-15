@@ -1,6 +1,7 @@
 package com.go2it.fish_wholesale_trading_test.entity;
 
 import javax.persistence.*;
+import javax.swing.*;
 import java.util.Collection;
 
 @Entity(name = "item")
@@ -14,6 +15,8 @@ public class Item {
     private String itemName;
     @Column(name = "item_price")
     private double itemPrice;
+    @Column(name = "item_descriptions")
+    private String itemDescriptions;
 
     @OneToMany(mappedBy = "item")
     private Collection<ItemOrder> itemsList;
@@ -58,6 +61,14 @@ public class Item {
 
     public void setItemsList(Collection<ItemOrder> itemsList) {
         this.itemsList = itemsList;
+    }
+
+    public String getItemDescriptions() {
+        return itemDescriptions;
+    }
+
+    public void setItemDescriptions(String itemDescriptions) {
+        this.itemDescriptions = itemDescriptions;
     }
 
     @Override

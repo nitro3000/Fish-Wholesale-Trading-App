@@ -1,11 +1,8 @@
 package com.go2it.fish_wholesale_trading_test.service;
 
-import com.go2it.fish_wholesale_trading_test.dto.ItemDto;
 import com.go2it.fish_wholesale_trading_test.entity.Item;
 import com.go2it.fish_wholesale_trading_test.repo.IItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,9 +31,11 @@ public class ItemService implements IItemService {
     }
 
     @Override
-    public void delete(Item item) {
-        itemRepository.delete (item);
+    public boolean removeByItemId(Long id) {
+        itemRepository.removeByItemId (id);
+        return true;
     }
+
 
     @Override
     public List<Item> findAll() {
@@ -49,8 +48,9 @@ public class ItemService implements IItemService {
     }
 
     @Override
+
     public Optional<Item> findByItemName(String itemName) {
-        return findByItemName (itemName);
+        return itemRepository.findByItemName (itemName);
     }
 
 

@@ -1,14 +1,19 @@
 package com.go2it.fish_wholesale_trading_test.controller;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.go2it.fish_wholesale_trading_test.dto.ItemDto;
 import com.go2it.fish_wholesale_trading_test.entity.Item;
 import com.go2it.fish_wholesale_trading_test.service.IItemService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,10 +22,27 @@ import java.util.Optional;
 public class ItemController {
     @Autowired
     private IItemService itemService;
+//############################################################-CREATE Item-#######################
+    //
+//        @PostMapping("/items")
+//    public Item createItem(@RequestBody Item item) {
+//        itemService.save (item);
+//        return item;
+//    }
+    @PostMapping("/items")
+    public ResponseEntity<String> createItem(@RequestBody String itemJson) throws IOException {
+        if (itemJson == null || itemJson.isEmpty ( )) {
+            return new ResponseEntity<> (HttpStatus.NOT_ACCEPTABLE);
+        }
+        ObjectMapper objectMapper = new ObjectMapper ( );
+        Item item = objectMapper.readValue (itemJson, Item.class);
+        itemService.save (item);
+        return new ResponseEntity<> (HttpStatus.OK);
+    }
+//############################################################-READ Item-#######################
 
     @GetMapping("/")
     public String mainPage() {
-        //return "mainPage.html";
         return "<div style=\"text-align:center;\">"
                 + "<h1>Welcome to</h1>" +
                 "<p> Fish Wholesale Store </p>" +
@@ -43,7 +65,21 @@ public class ItemController {
         }
         return htmlText;
     }
+//############################################################-UPDATE Item-#######################
 
+
+
+//############################################################-DELETE Item-#######################
+    @Transactional
+    @DeleteMapping("/items/{id}")
+    @ResponseBody
+    public ResponseEntity<String> removeByItemId(@PathVariable Long id) {
+        if (itemService.findById (id).isEmpty ( )) {
+            return ResponseEntity.status (HttpStatus.NOT_FOUND).body ("Item not found!");
+        }
+        itemService.removeByItemId (id);
+        return ResponseEntity.status (HttpStatus.OK).body ("Item DELETED Successfully");
+    }
     @GetMapping("/prices")
     public String showItemsAndPrices() {
         List<Item> itemList = itemService.findAll ( );
@@ -60,35 +96,20 @@ public class ItemController {
         return htmlText;
     }
 
-    @PostMapping(value = "/items")
-    public Item createItem(@RequestBody Item item) {
-        itemService.save (item);
-        return item;
-    }
 
+    @GetMapping(value = "prices/{itemName}")
+    public String getItemPriceByItemName(@PathVariable String itemName) {
+        ItemDto itemDto = new ItemDto ( );
+        itemService.findByItemName (itemName).ifPresent (item -> {
+            itemDto.setItemName (item.getItemName ( ));
+            itemDto.setItemPrice (item.getItemPrice ( ));
+            itemDto.setItemDescriptions (item.getItemDescriptions ( ));
+        });
+        String htmlText1 = "<div style=\"text-align:center;\">" + "<h1>Fish Wholesale Store</h1>" + "<div style=\"text-align:left;\">" + "<h2>Product name: " + itemName
+                + "</h2>" + "<div style=\"text-align:left;\">" + "<h2>Product price: " + itemDto.getItemPrice ( ) + "</h2>";
+        String image = "<h1>" + itemDto.getItemDescriptions ( ) + "</h1>" + "<img src=https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Bluefin-big.jpg/1024px-Bluefin-big.jpg></img>";
 
-    @GetMapping(value = "items/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public String getItemById(@PathVariable long id) {
-
-
-        Optional<Item> itemId = itemService.findById (id);
-        return itemId.toString ();
-
-//        //itemService.findByItemName (itemName);
-//        String image = "<div style=\"text-align:center;\">" + "<h1>Fish Wholesale Store</h1>" + "<img src=https://www.pilotonline.com/resizer/7bQ5-hekLPP3OHZ1QECd3erH24A=/415x198/top/arc-anglerfish-arc2-prod-tronc.s3.amazonaws.com" +
-//                "/public/YLEFAHRMEFCMFO34O7QIQJNCHY.jpg></img>";
-//        String htmlText1 = "<div style=\"text-align:left;\"><p> Product Code: </p>" + id +" is - " + itemName ;
-
-
-//        List<Item> itemList = itemService.findAll ( );
-//        for (Item item : itemList) {
-//             item.getItemName ( );
-//        }
-
-//        return image + "   " + htmlText1;
-
-
+        return htmlText1 + image;
     }
 //    @GetMapping(value = "items/{name}")
 //    @ResponseStatus(HttpStatus.OK)
