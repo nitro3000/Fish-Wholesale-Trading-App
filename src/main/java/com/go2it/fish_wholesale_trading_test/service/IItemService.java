@@ -9,10 +9,9 @@ public interface IItemService {
 
     void save(Item item);
 
-    void update(Item item);
+    void updateItemById(Long id,Item item);
 
     boolean removeByItemId(Long id);
-
 
     List<Item> findAll();
 

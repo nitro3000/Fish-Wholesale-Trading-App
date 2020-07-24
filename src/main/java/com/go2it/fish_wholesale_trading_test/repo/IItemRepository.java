@@ -16,6 +16,7 @@ public interface IItemRepository extends JpaRepository<Item,Long> {
 
      void removeByItemId (Long id);
 
+
 //    @Query("SELECT " +
 //            "new com.go2it.fish_wholesale_trading_test.entity.Item(i.itemPrice)" +
 //            "FROM " +

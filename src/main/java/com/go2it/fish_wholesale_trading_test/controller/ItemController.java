@@ -23,6 +23,7 @@ public class ItemController {
     @Autowired
     private IItemService itemService;
 //############################################################-CREATE Item-#######################
+
     //
 //        @PostMapping("/items")
 //    public Item createItem(@RequestBody Item item) {
@@ -30,15 +31,28 @@ public class ItemController {
 //        return item;
 //    }
     @PostMapping("/items")
+    @ResponseBody
     public ResponseEntity<String> createItem(@RequestBody String itemJson) throws IOException {
         if (itemJson == null || itemJson.isEmpty ( )) {
             return new ResponseEntity<> (HttpStatus.NOT_ACCEPTABLE);
         }
+        //todo: if else (itemName.isPresent)
+        // {return ResponseEntity.status (HttpStatus.IM_USED).body ("Item" + itemName +"already exist under ID: " + id ");}
+
         ObjectMapper objectMapper = new ObjectMapper ( );
         Item item = objectMapper.readValue (itemJson, Item.class);
         itemService.save (item);
-        return new ResponseEntity<> (HttpStatus.OK);
+        return ResponseEntity.status (HttpStatus.OK).body
+                ("Item " + item.getItemName ( ) + " CREATED Successfully under ID: " + item.getItemId ( ));
     }
+//    @ResponseBody
+//    public ResponseEntity<String> removeByItemId(@PathVariable Long id) {
+//        if (itemService.findById (id).isEmpty ( )) {
+//            return ResponseEntity.status (HttpStatus.NOT_FOUND).body ("Item ID: " + id + " not found!");
+//        }
+//        itemService.removeByItemId (id);
+//        return ResponseEntity.status (HttpStatus.OK).body ("Item ID: " + id + " DELETED Successfully");
+//    }
 //############################################################-READ Item-#######################
 
     @GetMapping("/")
@@ -65,21 +79,31 @@ public class ItemController {
         }
         return htmlText;
     }
-//############################################################-UPDATE Item-#######################
+
+    //############################################################-UPDATE Item-#######################
+    @PutMapping("/items/{id}")
+    @ResponseBody
+    public ResponseEntity<String> updateItemPriceById(@RequestBody Item item, @PathVariable Long id) {
+        if (itemService.findById (id).isEmpty ( )) {
+            return ResponseEntity.status (HttpStatus.NOT_FOUND).body ("Item ID: " + id + " not found!");
+        }
+        itemService.updateItemById (id, item);
+        return ResponseEntity.status (HttpStatus.OK).body ("Item ID: " + id + " UPDATED Successfully");
+    }
 
 
+    //############################################################-DELETE Item-#######################
 
-//############################################################-DELETE Item-#######################
-    @Transactional
     @DeleteMapping("/items/{id}")
     @ResponseBody
     public ResponseEntity<String> removeByItemId(@PathVariable Long id) {
         if (itemService.findById (id).isEmpty ( )) {
-            return ResponseEntity.status (HttpStatus.NOT_FOUND).body ("Item not found!");
+            return ResponseEntity.status (HttpStatus.NOT_FOUND).body ("Item ID: " + id + " not found!");
         }
         itemService.removeByItemId (id);
-        return ResponseEntity.status (HttpStatus.OK).body ("Item DELETED Successfully");
+        return ResponseEntity.status (HttpStatus.OK).body ("Item ID: " + id + " DELETED Successfully");
     }
+
     @GetMapping("/prices")
     public String showItemsAndPrices() {
         List<Item> itemList = itemService.findAll ( );
